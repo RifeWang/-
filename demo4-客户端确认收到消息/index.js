@@ -8,9 +8,10 @@ io.on('connection', socket => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
-    socket.on('chat message', msg => {
+    socket.on('chat message', (msg, fn) => {
         console.log('message: ' + msg);
-        io.emit('chat message', msg);
+        io.volatile.emit('chat message', msg); // volatile 易失性数据传输
+        fn('woot'); //通过回掉函数客户端确认接收到数据，并可以将数据返回
     });
 });
 
